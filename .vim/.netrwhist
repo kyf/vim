@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/work/gopro/src/bitbucket.org/kyf456/wxadmin/pkg/material'
+let g:netrw_dirhist_2='/usr/local/go/src/net'
+let g:netrw_dirhist_3='/usr/local/go/src/bytes'
+let g:netrw_dirhist_4='/work/gopro/src/github.com/kyf/6ryim/6ryim_admin'
+let g:netrw_dirhist_5='/work/gopro/src/github.com/kyf/6ryim/6ryim_daemon'
+let g:netrw_dirhist_6='/work/gopro/src/github.com/kyf/6ryim/6ryim_daemon/main.go'
+let g:netrw_dirhist_7='/work/gopro/src/github.com/kyf/sayhi/static'
+let g:netrw_dirhist_8='/work/gopro/src/github.com/inconshreveable/ngrok/bin'
