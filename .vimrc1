@@ -1,0 +1,102 @@
+set nocompatible              " be iMproved, required
+set nu
+syntax on
+filetype off                  " required
+
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'fatih/vim-go'
+Plugin 'rust-lang/rust.vim'
+
+" 新增：Rust LSP 必需插件
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'mattn/vim-lsp-settings'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+"
+" 核心：启用gopls作为定义跳转的后端（必须）
+let g:go_def_mode = 'gopls'
+let g:go_info_mode = 'gopls'
+
+" 可选：增强体验的配置
+let g:go_auto_sameids = 1  " 高亮当前光标所在的标识符（如函数名）
+let g:go_doc_keywordprg_enabled = 1  " 支持函数文档快速查看
+" set tagrelative=1  " 跳转时使用相对路径，避免路径问题
+
+
+" ==================== 新增：Rust LSP 配置 ====================
+" 1. 启用 rust-analyzer（vim-lsp-settings 会自动识别）
+let g:lsp_settings = {
+    \ 'rust_analyzer': {
+        \ 'cmd': ['rust-analyzer'],
+        \ 'filetypes': ['rust'],
+    \ },
+\ }
+
+" 2. 映射 Rust 跳转快捷键（和 vim-go 的 gd 保持一致，方便记忆）
+autocmd FileType rust nmap <buffer> gd <plug>(lsp-definition)
+autocmd FileType rust nmap <buffer> gD <plug>(lsp-type-definition)
+autocmd FileType rust nmap <buffer> gr <plug>(lsp-references)
+
+" 3. 可选：Rust 语法增强（rust.vim 补充）
+let g:rustfmt_autosave = 1  " 保存时自动格式化 Rust 代码
+let g:rust_clip_command = 'xclip -selection clipboard'  " 复制到系统剪贴板（Linux）
+
+
+" ==================== 新增：自动换行核心配置 ====================
+" 全局基础换行配置（所有文件通用）
+set wrap                      " 视觉上换行显示超长行
+set linebreak                 " 换行不拆分单词
+set nolist                    " 不显示换行符等特殊字符（避免干扰）
+set formatoptions+=j          " 注释行自动换行时，保留注释前缀（// /*）
+
+" 配合vim-go的自动格式化（保证换行和gofmt兼容）
+let g:go_fmt_autosave = 1     " 保存时自动gofmt格式化（修正换行）
+let g:go_fmt_command = 'gopls' " 用gopls格式化（和跳转后端一致）
+
+
+set autoindent
+set ruler
+set ts=4
+set shiftwidth=4
+set cursorline
