@@ -3,6 +3,18 @@ set nu
 syntax on
 filetype off                  " required
 
+" ==================== 新增：鼠标滚轮配置 ====================
+set mouse=a                   " 核心：开启所有模式的鼠标支持（a=all）
+set mousemodel=extend         " 优化鼠标行为（避免点击后光标跳转异常）
+" 映射鼠标滚轮：普通模式/可视模式上下移动光标（每次1行）
+nnoremap <ScrollWheelUp> k
+nnoremap <ScrollWheelDown> j
+vnoremap <ScrollWheelUp> k
+vnoremap <ScrollWheelDown> j
+" 插入模式下滚轮也能移动光标（无需退出插入模式）
+inoremap <ScrollWheelUp> <Esc>ki
+inoremap <ScrollWheelDown> <Esc>ji
+
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
